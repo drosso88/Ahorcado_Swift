@@ -15,6 +15,7 @@ class ViewController: UIViewController {
 
     @IBOutlet var palabraOculta: UILabel!
     
+    @IBOutlet var imagenesAhorcado: UIImageView!
     @IBAction func letraPulsada(_ sender: UIButton) {
         //vamos a guardar el primer elemento del título botón(la letra)
         let letra = Array(sender.currentTitle!)[0]
@@ -24,6 +25,11 @@ class ViewController: UIViewController {
             numeroFallos+=1;
         }
             print(numeroFallos)
+        if partidaGanada() {
+            numeroFallos = 3000
+        }
+        cambiaMonigote(numeroImagen: numeroFallos)
+        sender.isHidden = true
     }
     func chequeaLetra(letra : Character) -> Int {
         var aciertos:Int = 0;
@@ -53,6 +59,31 @@ class ViewController: UIViewController {
         }
         palabraOculta.text = auxiliar
     }
+    func cambiaMonigote(numeroImagen:Int) {
+        switch numeroImagen {
+        case 0: imagenesAhorcado.image = UIImage(named: "ahorcado0.png")
+        case 1: imagenesAhorcado.image = UIImage(named: "ahorcado1.png")
+        case 2: imagenesAhorcado.image = UIImage(named: "ahorcado2.png")
+        case 3: imagenesAhorcado.image = UIImage(named: "ahorcado3.png")
+        case 4: imagenesAhorcado.image = UIImage(named: "ahorcado4.png")
+        case 5: imagenesAhorcado.image = UIImage(named: "ahorcado5.png")
+        case 3000: imagenesAhorcado.image = UIImage(named: "win.png")
+            
+        
+        default: imagenesAhorcado.image = UIImage(named: "ahorcado6.png")
+            <#code#>
+        }
+    }
+    func partidaGanada() -> Bool {
+        var ganada = true
+        for p in (palabraOculta.text!).characters{
+            if p == "_" {
+                ganada = false
+            }
+        }
+        return ganada
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
